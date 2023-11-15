@@ -9,8 +9,15 @@ export const tmdbApi = createApi({
   endpoints: (builder) => ({
     // get movies by [type]
     getMovies: builder.query({
-      query: () =>
-        `movie/popular?language=en-US&page=${page}&api_key=${tmdbApiKey}`,
+      query: ({ genreIdOrCategoryName, page }) => {
+        if (genreIdOrCategoryName && typeof genreIdOrCategoryName == "string") {
+          return `movie/${genreIdOrCategoryName}?page=${page}&api_key=${tmdbApiKey}`;
+        }
+        if (genreIdOrCategoryName && typeof genreIdOrCategoryName == "number") {
+          return `discover/movie?with_genres=${genreIdOrCategoryName}&page=${page}&api_key=${tmdbApiKey}`;
+        }
+        return `movie/popular?language=en-US&page=${page}&api_key=${tmdbApiKey}`;
+      },
     }),
 
     getGenres: builder.query({
