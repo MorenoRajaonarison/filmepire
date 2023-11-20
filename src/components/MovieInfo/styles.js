@@ -45,4 +45,19 @@ export default makeStyles((theme) => ({
       padding: "0.5rem 1rem",
     },
   },
+  castImg: {
+    width: "100%",
+    maxWidth: "7em",
+    height: "7em",
+    objectFit: "cover",
+    borderRadius: "10px",
+  },
+  btnsContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
+  },
 }));
