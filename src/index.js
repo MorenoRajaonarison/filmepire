@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDom from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -8,13 +8,13 @@ import store from "./app/store";
 
 const theme = createTheme({});
 
-ReactDom.render(
+const rootContainer = createRoot(document.getElementById("root"));
+rootContainer.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </ThemeProvider>
-  </Provider>,
-  document.getElementById("root")
+  </Provider>
 );
