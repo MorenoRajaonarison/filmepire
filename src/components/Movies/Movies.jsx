@@ -12,7 +12,7 @@ import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 const Movies = () => {
   const [page, setPage] = useState(1);
-
+  const lg = useMediaQuery((theme) => theme.breakpoints.only("lg"));
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
@@ -44,7 +44,7 @@ const Movies = () => {
   }
   return (
     <>
-      <MovieList movies={data} />
+      <MovieList movies={data} numberOfMovies={lg ? 16 : 18} />
       <Pagination
         currentPage={page}
         setPage={setPage}
