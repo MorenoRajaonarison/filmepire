@@ -15,8 +15,8 @@ const Actors = () => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const { data, isFetching, error } = useGetActorDetailQuery(id);
-  const { data: actorMovies, isFetching: isActorMoviesFetcing } =
-    useGetActorMovieQuery({ id, page: 1 });
+  const { data: actorMovies, isFetching: isActorMoviesFetching } =
+    useGetActorMovieQuery({ id, page });
 
   if (isFetching)
     return (
@@ -49,6 +49,7 @@ const Actors = () => {
           />
         </Grid>
         <Grid
+          item
           lg={7}
           xl={8}
           style={{
@@ -63,7 +64,7 @@ const Actors = () => {
           <Typography variant="h5" gutterBottom>
             Born: {new Date(data?.birthday).toDateString()}
           </Typography>
-          <Typography variant="body1" align="jusitify" paragraph>
+          <Typography variant="body1" align="justify" paragraph>
             {data?.biography || "No biography ..."}
           </Typography>
           <Box marginTop="2rem" display="flex" justifyContent="space-around">
@@ -89,11 +90,17 @@ const Actors = () => {
         <Typography variant="h2" gutterBottom align="center">
           Movies
         </Typography>
-        {actorMovies && <MovieList movies={actorMovies} numberOfMovies={12} />}
+        {isActorMoviesFetching ? (
+          <Box display="flex" justifyContent="center">
+            <CircularProgress size="4rem" />
+          </Box>
+        ) : (
+          <MovieList movies={actorMovies} numberOfMovies={12} />
+        )}
         <Pagination
           currentPage={page}
           setPage={setPage}
-          totalPages={data?.total_pages}
+          totalPages={actorMovies?.total_pages}
         />
       </Box>
     </>
