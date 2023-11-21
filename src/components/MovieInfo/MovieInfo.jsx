@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import useStyles from "./styles";
 import {
   Modal,
@@ -33,6 +33,7 @@ import genreIcons from "../../assets/genres";
 import { MovieList } from "../";
 
 const MovieInfo = () => {
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -175,7 +176,11 @@ const MovieInfo = () => {
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => {}} endIcon={<Theaters />} href="#">
+                <Button
+                  onClick={() => setOpen(true)}
+                  endIcon={<Theaters />}
+                  href="#"
+                >
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -225,6 +230,23 @@ const MovieInfo = () => {
           <Box>Sorry, nothing was found</Box>
         )}
       </Box>
+      <Modal
+        closeAfterTransition
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {data?.videos.results.length > 0 && (
+          <iframe
+            autoPlay
+            className={classes.video}
+            frameBorder="0"
+            title="trailer"
+            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+            allow="autoplay"
+          />
+        )}
+      </Modal>
     </Grid>
   );
 };
