@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import {
   useGetActorDetailQuery,
@@ -7,15 +7,16 @@ import {
 import { Box, CircularProgress, Button, Grid, Typography } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import useStyles from "./styles";
-import { MovieList } from "../";
+import { MovieList, Pagination } from "../";
 
 const Actors = () => {
   const { id } = useParams();
   const history = useHistory();
+  const classes = useStyles();
+  const [page, setPage] = useState(1);
   const { data, isFetching, error } = useGetActorDetailQuery(id);
   const { data: actorMovies, isFetching: isActorMoviesFetcing } =
     useGetActorMovieQuery({ id, page: 1 });
-  const classes = useStyles();
 
   if (isFetching)
     return (
@@ -89,6 +90,11 @@ const Actors = () => {
           Movies
         </Typography>
         {actorMovies && <MovieList movies={actorMovies} numberOfMovies={12} />}
+        <Pagination
+          currentPage={page}
+          setPage={setPage}
+          totalPages={data?.total_pages}
+        />
       </Box>
     </>
   );
