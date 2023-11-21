@@ -139,7 +139,7 @@ const MovieInfo = () => {
                       xs={4}
                       md={2}
                       component={Link}
-                      to={`/actors/${actor.id}`}
+                      to={`/actor/${actor.id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <img
