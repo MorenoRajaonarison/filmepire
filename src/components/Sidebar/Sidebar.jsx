@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import useStyles from "./styles";
 import {
   Divider,
@@ -46,6 +46,10 @@ function Sidebar({ setMobileOpen }) {
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   return (
     <>
